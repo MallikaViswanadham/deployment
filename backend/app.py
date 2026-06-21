@@ -5,6 +5,10 @@ from enum import Enum;
 from typing import Annotated,Literal
 app = FastAPI()
 
+class Image(BaseModel):
+    url: HttpUrl
+    name: str
+
 class Item(BaseModel):
     name:str
     price : int
@@ -22,9 +26,6 @@ class FilterParams(BaseModel):
     offset: int = Field(0, ge=0)
     order_by: Literal["created_at", "updated_at"] = "created_at"
     tags: list[str] = []
-class Image(BaseModel):
-    url: HttpUrl
-    name: str
 
 
 app.add_middleware(
