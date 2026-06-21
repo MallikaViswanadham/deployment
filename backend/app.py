@@ -30,7 +30,7 @@ class FilterParams(BaseModel):
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],  # frontend origin
+    allow_origins=["http://localhost:4200","https://angular-frontend.icyocean-28693c97.westus2.azurecontainerapps.io"],  # frontend origin
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
