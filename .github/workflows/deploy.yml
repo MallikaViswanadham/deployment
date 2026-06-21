@@ -1,0 +1,49 @@
+name: Deploy to Azure Container Apps
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  ACR_LOGIN_SERVER: ${{ secrets.ACR_NAME }}.azurecr.io
+  BACKEND_IMAGE: fastapi-backend
+  FRONTEND_IMAGE: angular-frontend
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy backend
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}/backend
+          acrName: ${{ secrets.ACR_NAME }}
+          containerAppName: fastapi-backend
+          resourceGroup: ${{ secrets.RESOURCE_GROUP }}
+          containerAppEnvironment: ${{ secrets.CONTAINER_APP_ENVIRONMENT }}
+          targetPort: 8000
+          ingress: external
+          imageToBuild: ${{ env.ACR_LOGIN_SERVER }}/${{ env.BACKEND_IMAGE }}:${{ github.sha }}
+
+      - name: Deploy frontend
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }}/frontend/fastapiwangular
+          acrName: ${{ secrets.ACR_NAME }}
+          containerAppName: angular-frontend
+          resourceGroup: ${{ secrets.RESOURCE_GROUP }}
+          containerAppEnvironment: ${{ secrets.CONTAINER_APP_ENVIRONMENT }}
+          targetPort: 4000
+          ingress: external
+          imageToBuild: ${{ env.ACR_LOGIN_SERVER }}/${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
