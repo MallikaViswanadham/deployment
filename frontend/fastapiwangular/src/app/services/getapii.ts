@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class Getapii {
-     private API_host = "http://127.0.0.1:8000";
+     private API_host = "https://fastapi-backend.icyocean-28693c97.westus2.azurecontainerapps.io/";
 constructor(private http:HttpClient){}
      getapi(): Observable<any>{
       console.log("service");
