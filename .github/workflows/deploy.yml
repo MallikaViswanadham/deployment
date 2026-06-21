@@ -29,6 +29,8 @@ jobs:
         with:
           appSourcePath: ${{ github.workspace }}/backend
           acrName: ${{ secrets.ACR_NAME }}
+          acrUsername: ${{ secrets.ACR_USERNAME }}
+          acrPassword: ${{ secrets.ACR_PASSWORD }}
           containerAppName: fastapi-backend
           resourceGroup: ${{ secrets.RESOURCE_GROUP }}
           containerAppEnvironment: ${{ secrets.CONTAINER_APP_ENVIRONMENT }}
@@ -41,6 +43,8 @@ jobs:
         with:
           appSourcePath: ${{ github.workspace }}/frontend/fastapiwangular
           acrName: ${{ secrets.ACR_NAME }}
+          acrUsername: ${{ secrets.ACR_USERNAME }}
+          acrPassword: ${{ secrets.ACR_PASSWORD }}
           containerAppName: angular-frontend
           resourceGroup: ${{ secrets.RESOURCE_GROUP }}
           containerAppEnvironment: ${{ secrets.CONTAINER_APP_ENVIRONMENT }}
